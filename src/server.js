@@ -1,8 +1,13 @@
 // use the express library
 const express = require('express');
-
 // create a new server application
 const app = express();
+
+// cookie 
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
+let nextVisitorId = 1;
 
 // Define the port we will listen on
 // (it will attempt to read an environment global
@@ -13,10 +18,25 @@ const port = process.env.PORT || 3000;
 app.set('view engine', 'ejs');
 
 // The main page of our website
+// the main page
 app.get('/', (req, res) => {
-  res.render('welcome', {
-    name: req.query.name || "World",
-  });
+  const date = Date.now().toString();
+  let visitorId = req.cookies.visitorId ? nextVisitorId : nextVisitorId++;
+  res.cookie('visitorId', visitorId);
+  res.cookie('visited', date);
+  console.log(req.cookies.visited);
+  if (req.cookies.visited){
+  req.cookies.visited = Math.floor((date - req.cookies.visited ) / 1000 )
+  }else{
+    req.cookies.visited = null;
+  }
+
+  res.render('welcome',{
+  name: req.query.name || "World",
+  visitDate: new Date().toString(), 
+  visitId: visitorId,
+  timeSinceLast : req.cookies.visited,
+  } /* params */);
 });
 
 
@@ -26,3 +46,4 @@ app.listen(port);
 
 // Printout for readability
 console.log("Server Started!");
+

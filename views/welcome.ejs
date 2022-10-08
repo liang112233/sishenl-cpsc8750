@@ -6,7 +6,9 @@
     <link rel="stylesheet" href="app.css">
   </head>
   <body>
-    <h1>Hello, <%= name %>!</h1>
-    <p>This site was accessed at <%= new Date().toLocaleString() %> ! </p>
+    <h1>Hello, <%= name %>!</h1>  
+    <p>This site was accessed at <%= visitDate %> ! </p>
+    <p>You are visitor #<%= visitId %> </p>
+    <p>It has been <%= timeSinceLast %>  seconds since your last visit</p>
   </body>
 </html>
