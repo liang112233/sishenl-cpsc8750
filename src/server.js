@@ -13,9 +13,23 @@ const port = process.env.PORT || 3000;
 
 // The main page of our website
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.send(`
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <title>An Example Title</title>
+        <link rel="stylesheet" href="app.css">
+      </head>
+      <body>
+        <h1>Hello, World!</h1>
+        <p>HTML is so much better than a plain string!</p>
+      </body>
+    </html>
+  `);
 });
 
+app.use(express.static('public'));
 // Start listening for network connections
 app.listen(port);
 
