@@ -13,6 +13,10 @@ const port = process.env.PORT || 3000;
 
 // The main page of our website
 app.get('/', (req, res) => {
+  // reads the url parameter
+  // http://domain/?name=text
+  const name = req.query.name || "World";
+
   res.send(`
     <!DOCTYPE html>
     <html lang="en">
@@ -22,12 +26,14 @@ app.get('/', (req, res) => {
         <link rel="stylesheet" href="app.css">
       </head>
       <body>
-        <h1>Hello, World!</h1>
+        <h1>Hello, ${name}!</h1>
         <p>HTML is so much better than a plain string!</p>
       </body>
     </html>
   `);
 });
+
+
 
 app.use(express.static('public'));
 // Start listening for network connections
