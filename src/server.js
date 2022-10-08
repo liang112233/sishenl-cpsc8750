@@ -9,30 +9,15 @@ const app = express();
 // first, that is for when this is used on the real
 // world wide web).
 const port = process.env.PORT || 3000;
-
+// set the view engine to ejs
+app.set('view engine', 'ejs');
 
 // The main page of our website
 app.get('/', (req, res) => {
-  // reads the url parameter
-  // http://domain/?name=text
-  const name = req.query.name || "World";
-
-  res.send(`
-    <!DOCTYPE html>
-    <html lang="en">
-      <head>
-        <meta charset="UTF-8" />
-        <title>An Example Title</title>
-        <link rel="stylesheet" href="app.css">
-      </head>
-      <body>
-        <h1>Hello, ${name}!</h1>
-        <p>HTML is so much better than a plain string!</p>
-      </body>
-    </html>
-  `);
+  res.render('welcome', {
+    name: req.query.name || "World",
+  });
 });
-
 
 
 app.use(express.static('public'));
