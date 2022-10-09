@@ -21,16 +21,12 @@ app.set('view engine', 'ejs');
 // the main page
 app.get('/', (req, res) => {
   const date = Date.now().toString();
-  let visitorId = req.cookies.visitorId ? nextVisitorId : nextVisitorId++;
+  let visitorId = req.cookies.visitorId ? nextVisitorId : ++nextVisitorId;
   res.cookie('visitorId', visitorId);
   res.cookie('visited', date);
-  console.log(req.cookies.visited);
-  if (req.cookies.visited){
+ // console.log(req.cookies.visited);
   req.cookies.visited = Math.floor((date - req.cookies.visited ) / 1000 )
-  }else{
-    req.cookies.visited = null;
-  }
-
+  
   res.render('welcome',{
   name: req.query.name || "World",
   visitDate: new Date().toString(), 
